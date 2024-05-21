@@ -233,19 +233,19 @@ function phmmerRequest(seq) {
     var data = new FormData();
     data.append("algo", "phmmer");
     data.append("seq", seq);
-    data.append("seqdb", "uniprotrefprot");
+    data.append("seqdb", "rp35");
     var request = new XMLHttpRequest();
     request.open("POST", url, true);
     request.setRequestHeader("Accept", "text/html");
     request.onreadystatechange = phmmerCallback.bind(this, request);
-    printToInfoBoxDiv("Starting phmmer search against UniProt reference proteomes");
+    printToInfoBoxDiv("Starting phmmer search against UniProt representative proteomes at 35% co-membership threshold");
     request.send(data);
 }
 
 function phmmerCallback(request) {
     if ((request.readyState === XMLHttpRequest.DONE) && (request.status === 200)) {
         var responseURL = request.responseURL;
-        printToInfoBoxDiv("phmmer search against UniProt reference proteomes finished, results: ", responseURL);
+        printToInfoBoxDiv("phmmer search against UniProt representative proteomes finished, results: ", responseURL);
         var jobID = responseURL.split("/")[6];
         printToInfoBoxDiv("Checking significant hits ...");
         checkSignificantHitsRequest(jobID);
